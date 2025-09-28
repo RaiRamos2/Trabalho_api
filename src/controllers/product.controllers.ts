@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { prisma } from "../utils/prisma";
-import id from "zod/v4/locales/id.js";
+
+export const getHealth = async (req : Request, res : Response) => {
+    return res.json({status: "OK"})
+}
 
 export const createProduct = async (req : Request, res :Response) => {
     try {
@@ -13,6 +16,14 @@ export const createProduct = async (req : Request, res :Response) => {
     } catch (error: any) {
         return res.status(500).json({error: "Internal Server Error"})
     }
+}
+
+export const getProductById = async (req : Request, res : Response) => {
+    const {id} =req.params
+    const product = await prisma.product.findUnique({
+        where : {id: String(id)}
+
+    })
 }
 
 export const getProduct = async (req : Request, res : Response ) => {
