@@ -53,3 +53,16 @@ export const updateProduct = async (req : Request, res: Response) => {
         return res.status(500).json({error: "Internal Server Error"})
     }
 }
+
+export const patchParcialUpdate = async (req : Request, res : Response) => {
+    try {
+        const {id} = req.params
+        const {name, price, description, sku, stock} = req.body
+        const product = await prisma.product.update({
+            where: {id: String(id)},
+            data: {name, price, description, sku, stock}
+        })
+    } catch (error: any) {
+        return res.status(500).json({error: "Internal Server Error"})
+    }
+}
